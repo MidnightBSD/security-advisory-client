@@ -38,7 +38,7 @@ sub main() {
 				}
 
 			if ($vulnerable eq 1) {	
-				print "Vulnerable package $cpeArray[3]  print $cpeArray[4] print $cpeArray[5]\n";
+				print "Vulnerable package $cpeArray[3] $cpeArray[4] $cpeArray[5]\n";
 				print $issue->{cveId} . "\nDescription: " . $issue->{description} .  "\n";
 				print "Severity $issue->{severity}";
 				print "\n";
