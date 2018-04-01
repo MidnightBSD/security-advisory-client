@@ -40,8 +40,7 @@ sub main() {
 			if ($vulnerable eq 1) {	
 				print "Vulnerable package $cpeArray[3] $cpeArray[4] $cpeArray[5]\n";
 				print $issue->{cveId} . "\nDescription: " . $issue->{description} .  "\n";
-				print "Severity $issue->{severity}";
-				print "\n";
+				print "Severity: $issue->{severity}\n\n";
 			}
 		}
 	}
@@ -74,12 +73,82 @@ sub getIssues() {
 	return JSON->new->utf8->decode($REST ->{response}->content);
 }
 
-sub cmp_version() {
-	my ($a, $b) = @_;
+sub transform {
+        my ($val) = @_;
 
-	return version->declare($b)->numify >= version->declare($a)->numify;
+	if ($val eq '~') {
+		return -1;
+	} elsif ($val =~ /^\d$/) {
+		return $val * 1 + 1;
+	} elsif ($val =~ /^[A-Za-z]$/) {
+		return ord($val);
+	} else {
+		return ord($val) + 128;
+	}
 }
 
+sub compare_string {
+	my ($ver1, $ver2) = @_;
+	
+	my @a = map(transform($_), split(//, $ver1));
+	my @b = map(transform($_), split(//, $ver2));
+    
+	while (1) {
+		my ($a, $b) = (shift @a, shift @b);
+
+		if (!defined($a) && !defined($b)) {
+			return 0;
+		}
+
+		$a ||= 0;
+		$b ||= 0;
+
+		if ($a > $b) {
+			return 1;
+		} elsif ($a < $b) {
+			return -1;
+		}
+	}
+}
+
+
+sub cmp_version {
+	my ($ver1, $ver2) = @_;
+
+	my @a = split_digits($ver1);
+	my @b = split_digits($ver2);
+    
+	while (1) {
+		my ($a, $b) = (shift @a, shift @b);
+		my $cmp;
+
+		if (!defined($a) && !defined($b)) {
+			return 0;
+		}
+
+		$a ||= 0;
+		$b ||= 0;
+
+		# happy path.. numeric
+		if ($a =~ /^\d+$/ and $b =~ /^\d+$/) {
+			$cmp = $a <=> $b;
+			if ($cmp) {
+				return $cmp;
+			}
+		} else {
+			$cmp = compare_string($a, $b);
+			if ($cmp) {
+				return $cmp;
+		 	}
+		}
+	}
+}
+
+sub split_digits() {
+	my ($num) = @_;
+
+	return split(/(?<=\d)(?=\D)|(?<=\D)(?=\d)/, $num);
+}
 
 main();
 
