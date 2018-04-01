@@ -7,6 +7,7 @@ use JSON;
 use Data::Dumper;
 
 use LWP::UserAgent;
+use Scalar::Util qw(looks_like_number);
 
 
 sub main() {
@@ -30,7 +31,7 @@ sub main() {
 #			print Dumper($issue);
 				foreach $product (@{$issue->{products}}) {
 					if ($product->{name} eq $cpeArray[4]) {
-						if ($product->{version} >= $cpeArray[5]) {
+						if (cmp_version($cpeArray[5], $product->{version})) {
 							$vulnerable = 1;
 							last;
 						}	
@@ -73,6 +74,20 @@ sub getIssues() {
 
 	return JSON->new->utf8->decode($REST ->{response}->content);
 }
+
+sub cmp_version() {
+	my ($a, $b) = @_;
+
+	if (looks_like_number($a) && looks_like_number($b)) {
+		return $b >= $a;
+	}
+
+	my $a1 = $a =~ s/\.//gi;
+	my $b1 = $b =~ s/\.//gi;
+
+	return $b1 >= $a1;
+}
+
 
 main();
 
