@@ -7,7 +7,6 @@ use JSON;
 use Data::Dumper;
 
 use LWP::UserAgent;
-use Scalar::Util qw(looks_like_number);
 use version;
 
 sub main() {
@@ -78,16 +77,7 @@ sub getIssues() {
 sub cmp_version() {
 	my ($a, $b) = @_;
 
-	if (looks_like_number($a) && looks_like_number($b)) {
-		return $b >= $a;
-	}
-
 	return version->declare($b)->numify >= version->declare($a)->numify;
-
-#	my $a1 = $a =~ s/\.//gi;
-#	my $b1 = $b =~ s/\.//gi;
-
-#	return $b1 >= $a1;
 }
 
 
