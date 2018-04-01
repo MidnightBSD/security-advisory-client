@@ -8,7 +8,7 @@ use Data::Dumper;
 
 use LWP::UserAgent;
 use Scalar::Util qw(looks_like_number);
-
+use version;
 
 sub main() {
 	my ($filename) = @ARGV;
@@ -82,10 +82,12 @@ sub cmp_version() {
 		return $b >= $a;
 	}
 
-	my $a1 = $a =~ s/\.//gi;
-	my $b1 = $b =~ s/\.//gi;
+	return version->declare($b)->numify >= version->declare($a)->numify;
 
-	return $b1 >= $a1;
+#	my $a1 = $a =~ s/\.//gi;
+#	my $b1 = $b =~ s/\.//gi;
+
+#	return $b1 >= $a1;
 }
 
 
