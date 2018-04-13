@@ -18,4 +18,5 @@ mport install security-advisory-client
 ## Run it
 sudo /usr/local/bin/advisory.pl
 
-It can also run out of the daily periodic scripts and results emailed to you.
+It can also run out of the daily periodic scripts and results emailed to you. Simply add it to the /etc/periodic.conf file as
+daily_status_security_advisorymport_enable="YES"
