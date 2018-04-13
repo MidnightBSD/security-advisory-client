@@ -7,6 +7,7 @@ use JSON;
 use Data::Dumper;
 
 use LWP::UserAgent;
+use LWP::Protocol::https;
 use version;
 
 sub main() {
@@ -52,7 +53,7 @@ sub getIssues() {
 
         my $REST= ({
             HOST  => "$server",
-            URL   => "http://$server/api"
+            URL   => "https://$server/api"
         });
 
 	unless($vendor) {
