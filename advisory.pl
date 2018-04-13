@@ -31,7 +31,7 @@ sub main() {
 #			print Dumper($issue);
 				foreach $product (@{$issue->{products}}) {
 					if ($product->{name} eq $cpeArray[4]) {
-						if (cmp_version($cpeArray[5], $product->{version}) < 1) {
+						if (cmp_version($cpeArray[5], $product->{version}) eq 0) {
 							$vulnerable = 1;
 							last;
 						}	
