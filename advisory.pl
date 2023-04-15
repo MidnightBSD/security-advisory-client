@@ -66,7 +66,7 @@ sub getIssues() {
 
         $REST->{UA} = LWP::UserAgent->new( keep_alive => 0 );
 
-        $REST->{resource} = $REST->{URL} . ("/advisory/vendor/" . $vendor . "/product/" . $product );
+        $REST->{resource} = $REST->{URL} . ("/advisory/vendor/" . $vendor . "/product/" . $product . "?startDate=2005-12-31");
 
         $REST->{request} = HTTP::Request->new( GET =>  $REST->{resource} );
         $REST->{response} = $REST->{UA}->request( $REST->{request} );
