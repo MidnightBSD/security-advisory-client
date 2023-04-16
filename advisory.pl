@@ -3,8 +3,10 @@
 use strict;
 use warnings;
 
+use Try::Tiny;
 use JSON;
 use Data::Dumper;
+use URI::Escape;
 
 use LWP::UserAgent;
 use LWP::Protocol::https;
@@ -66,12 +68,18 @@ sub getIssues() {
 
         $REST->{UA} = LWP::UserAgent->new( keep_alive => 0 );
 
-        $REST->{resource} = $REST->{URL} . ("/advisory/vendor/" . $vendor . "/product/" . $product . "?startDate=2005-12-31");
+        $REST->{resource} = $REST->{URL} . ("/advisory/vendor/" .  uri_escape($vendor) . "/product/" .  uri_escape($product) ); #. "?startDate=2005-12-31");
 
         $REST->{request} = HTTP::Request->new( GET =>  $REST->{resource} );
         $REST->{response} = $REST->{UA}->request( $REST->{request} );
 
-	return JSON->new->utf8->decode($REST ->{response}->content);
+	try {
+		return JSON->new->utf8->decode($REST ->{response}->content);
+ 	} catch {
+#  		print "$_\n";
+		print "Unable to check $vendor $product\n";
+		return [];
+	};
 }
 
 sub transform {
