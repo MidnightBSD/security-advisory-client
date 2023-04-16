@@ -1,5 +1,5 @@
 # security-advisory-client
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Flaffer1%2Fsecurity-advisory-client.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Flaffer1%2Fsecurity-advisory-client?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmidnightbsd%2Fsecurity-advisory-client.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmidnightbsd%2Fsecurity-advisory-client?ref=badge_shield)
 
 MidnightBSD security advisory client
 
@@ -25,4 +25,4 @@ daily_status_security_advisorymport_enable="YES"
 
 
 ## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Flaffer1%2Fsecurity-advisory-client.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Flaffer1%2Fsecurity-advisory-client?ref=badge_large)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmidnightbsd%2Fsecurity-advisory-client.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmidightbsd%2Fsecurity-advisory-client?ref=badge_large)
