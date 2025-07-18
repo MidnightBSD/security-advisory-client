@@ -28,6 +28,8 @@ sub main() {
 		@cpeArray = split /:/, $cpe;
 		$issues = getIssues($cpeArray[3], $cpeArray[4]);
 
+  		if (!(ref $issues eq 'ARRAY' )) {  next; };
+
 		foreach my $issue (@$issues) {
 			$vulnerable = 0;
 #			print Dumper($issue);
